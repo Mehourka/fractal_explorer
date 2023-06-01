@@ -18,12 +18,14 @@
 # Tester : git@github.com:LeoFu9487/push_swap_tester.git
 
 NAME	=	fractol
-LDIR	=	libft/
-LIBFT	=	$(LDIR)/libft.a
-IDIR	=	lib/
-HEADERS	=	$(IDIR)/push_swap.h \
-			$(LDIR)/libft.h
-INCLUDES= $(patsubst %, -I%, $(dir $(HEADERS)))
+LDIR	=	lib/
+IDIR	=	include/
+
+LIBFT	=	$(LDIR)/libft
+LIBMLX	=	$(LDIR)/MLX42
+
+INCLUDES=	-I $(LDIR)/libft -I $(IDIR) -I $(LIBMLX)/include
+LIBS	=	$(LIBFT)/libft.a $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 
 # Colors
@@ -35,7 +37,7 @@ NC		=	\033[0m
 # Compiler and flags
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
-CFLAGS +=	$(INCLUDES)
+CFLAGS +=	-Wunreachable-code -Ofast
 RM		=	rm
 
 # Sources
@@ -56,29 +58,29 @@ SRCS		:=	$(SRCS:%.c=$(SDIR)%.c)
 #                                TARGETS                                       #
 #------------------------------------------------------------------------------#
 
-all : $(NAME)
+all : libmlx libft $(NAME)
 
 exec : $(NAME)
 	./$(NAME) $(ARGS)
 
 # Compile exec
-$(NAME) :  $(LIBFT) $(OBJS)
+$(NAME) : $(OBJS)
 	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -I.
-
-$(BONUS) :  $(LIBFT) $(OBJS_BONUS)
-	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
-	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -o $(BONUS) -I.
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME) -I. $(INCLUDES)
 
 # Compile libft
-$(LIBFT):
-	@echo "$(BLUE)	Compiling libft ...	$(NC)"
-	@$(MAKE) -C $(@D) -s
+libft:
+# @echo "$(BLUE)	Compiling libft ...	$(NC)"m
+	@ $(MAKE) -C $(LIBFT) -s
+
+#Compiling libmlx
+libmlx:
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4 -s
 
 # Compile objects
 $(ODIR)%.o : $(SDIR)%.c
 	@mkdir -p $(ODIR);
-	@$(CC) -c $(CFLAGS) $< -o $@
+	@$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDES)
 
 # Compile Bonus
 $(ODIR)%.o : $(BDIR)%.c
@@ -88,6 +90,7 @@ $(ODIR)%.o : $(BDIR)%.c
 # Remove objects
 clean :
 	@$(RM) -rf $(ODIR)
+	@rm -rf $(LIBMLX)/build
 	@echo "$(RED)	Removed objects	$(NC)"
 
 # Remove all
@@ -95,7 +98,7 @@ fclean : clean
 	@$(RM) -f $(NAME) $(BONUS)
 	@$(RM) -rf $(NAME).dSYM
 
-	@$(MAKE) fclean -C $(LDIR) -s
+	@$(MAKE) fclean -C $(LIBFT) -s
 	@echo "$(RED)	Removed executablesand libft	$(NC)"
 
 # Remake
@@ -106,10 +109,10 @@ leak :
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(ARGS)
 
 test:
-	@echo $(INCLUDES)
+	@echo $(dir $(LIBFT))
 
 visualizer:
 	./push_swap_visualizer/build/bin/visualizer
 
 .PHONY:
-	clean fclean re test all directories visualizer leak
+	clean fclean re test all directories visualizer leak libft libmlx
