@@ -36,7 +36,7 @@ NC		=	\033[0m
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra
+# CFLAGS	=	-Wall -Werror -Wextra
 CFLAGS +=	-Wunreachable-code -Ofast
 RM		=	rm
 
@@ -45,6 +45,8 @@ SDIR	=	src/
 BDIR	=	bonus/
 
 SRCS	=	main.c		\
+			ft_map.c	\
+			tests.c		\
 
 
 # Objects

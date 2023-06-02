@@ -1,14 +1,24 @@
 #include "fractol.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "MLX42/MLX42.h"
-#include <string.h>
-#define WIDTH 720
-#define HEIGHT 480
+t_data *init_data(void)
+{
+	static t_data *data;
 
-#define BPP sizeof(int32_t)
+
+	if (!data)
+	{
+		data = malloc(sizeof(t_data));
+		data->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
+		data->image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+		data->xy_range.min = -2;
+		data->xy_range.max = 2;
+		data->xy_offset.x = 0;
+		data->xy_offset.x = 0;
+		data->max_iter = 50;
+	}
+	return (data);
+}
+
 
 static void ft_error(void)
 {
@@ -16,73 +26,132 @@ static void ft_error(void)
 	exit(EXIT_FAILURE);
 }
 
-// static void ft_hook(void* param)
-// {
-// 	const mlx_t*	mlx = param;
 
-// 	printf("WIDTH %d | HEIGHT: %d\n", mlx->width, mlx->height);
+// void	hook(void* param)
+// {
+// 	mlx_t* mlx;
+
+// 	mlx = param;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+// 		mlx_close_window(mlx);
+// 	if (mlx_is_key_down(mlx, MLX_KEY_P))
+// 		mlx_delete_image(mlx, g_img);
+// 	for (int x = 0; x < g_img->width; x++)
+// 		for(int y= 0; y < g_img->height; y++)
+// 			mlx_put_pixel(g_img, x, y, rand() % RAND_MAX);
 // }
 
-void my_scrollhook(double xdelta, double ydelta, void* param)
+
+void scroll_zoom(double xdelta, double ydelta, void *param)
 {
-	(void) param;
+	t_data			*data = init_data();
+	mlx_t			*mlx = data->mlx;
+	float EPS = 0.1;
+
 	if (ydelta > 0)
-		puts("Up!");
-	else if (ydelta < 0)
-		puts("Down!");
-
-	if (xdelta > 0)
-		puts("Slide left!");
-	else if (xdelta < 0)
-		puts("Slide right!");
+	{
+		data->xy_range.min *= 1 + EPS;
+		data->xy_range.max *= 1 + EPS;
+	}
+	if (ydelta < 0)
+	{
+		data->xy_range.min *= 1 - EPS;
+		data->xy_range.max *= 1 - EPS;
+	}
 
 }
 
-void my_keyhook(mlx_key_data_t keydata, void* param)
+// static t_range		xy_range = {-2, 2};
+void key_navigation(void *param)
 {
-	(void) param;
-	// If we PRESS the 'J' key, print "Hello".
-	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
-		puts("Hello ");
+	t_data			*data = init_data();
+	mlx_t			*mlx = data->mlx;
+	float EPS = 0.02;
+	float TRANS_EPS = 0.2;
+	float range;
 
-	// If we RELEASE the 'K' key, print "World".
-	if (keydata.key == MLX_KEY_K && keydata.action == MLX_RELEASE)
-		puts("World");
+	range = data->xy_range.max - data->xy_range.min;
 
-	// If we HOLD the 'L' key, print "!".
-	if (keydata.key == MLX_KEY_L && keydata.action == MLX_REPEAT)
-		puts("!");
+	// Exit
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
+	if (mlx_is_key_down(mlx, MLX_KEY_P))
+		mlx_delete_image(mlx, data->image);
+
+	// Zoom
+	if (mlx_is_key_down(mlx, MLX_KEY_PAGE_UP))
+	{
+		data->xy_range.min *= 1 + EPS;
+		data->xy_range.max *= 1 + EPS;
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_PAGE_DOWN))
+	{
+		data->xy_range.min *= 1 - EPS;
+		data->xy_range.max *= 1 - EPS;
+	}
+
+	// Translate
+	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+		data->xy_offset.y -=  EPS * range;
+
+	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+		data->xy_offset.y +=  EPS * range;
+
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+		data->xy_offset.x -=  EPS * range;
+
+	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+		data->xy_offset.x +=  EPS * range;
+
+
 }
 
-int main(void)
+
+void square_hook(void *param)
 {
 
-	// mlx_set_setting(MLX_MAXIMIZED, true);
+	t_data			*data = init_data();
+	mlx_t			*mlx = data->mlx;
+	mlx_image_t		*image = data->image;
+	t_range			xy_range = data->xy_range;
+	t_vec			off = data->xy_offset;
+	float x;
+	float y;
 
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
+	for (int i = 0; i < image->width; i++)
+	{
+		for(int j= 0; j < image->height; j++)
+		{
+			x = ft_map(i, (t_range){0, image->width}, xy_range) + off.x;
+			y = ft_map(j, (t_range){0, image->height}, xy_range) + off.y;
+			if (x >= -1 && x <= 1 && y >= -1 && y <= 1)
+				mlx_put_pixel(image, i, j, WHITE);
+			else
+				mlx_put_pixel(image, i, j, BLACK);
+		}
+	}
+}
+
+
+
+
+
+int32_t	main(void)
+{
+	t_data			*data = init_data();
+	mlx_t			*mlx = data->mlx;
+
+	data = init_data();
+
 	if (!mlx)
-		ft_error();
+		exit(EXIT_FAILURE);
 
-	// Drawing using mlx_image_t
-	// mlx_image_t* img = mlx_new_image(mlx, 300, 300);
-	// if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
-	// 	ft_error();
-	// memset(img->pixels,0xFF,  img->width * img->height * BPP);
+	mlx_image_to_window(data->mlx, data->image, 0, 0);
+	mlx_loop_hook(data->mlx, &square_hook, data->mlx);
+	mlx_loop_hook(data->mlx, &key_navigation, data->mlx);
+	mlx_scroll_hook(mlx, &scroll_zoom, NULL);
 
-	// Draw using put_pixel
-	// for(int i = 99; i < 200; i++)
-	// {
-	// 	for(int j = 90; j < 200; j++)
-	// 		mlx_put_pixel(img, i, j, i<<8 | j << 16| 255);
-	// }
-
-
-
-
-	// mlx_loop_hook(mlx, ft_hook, mlx);
-	// mlx_scroll_hook(mlx, &my_scrollhook, NULL);
-	mlx_key_hook(mlx, &my_keyhook, NULL);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_loop(data->mlx);
+	mlx_terminate(data->mlx);
 	return (EXIT_SUCCESS);
 }
