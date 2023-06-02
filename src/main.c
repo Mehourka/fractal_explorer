@@ -39,11 +39,13 @@ int32_t	main(void)
 		exit(EXIT_FAILURE);
 
 	mlx_image_to_window(data->mlx, data->image, 0, 0);
-	// mlx_loop_hook(data->mlx, &square_hook, data->mlx);
+	mlx_loop_hook(data->mlx, &square_hook, data->mlx);
+	// mlx_loop_hook(data->mlx, &mouse_navigation, data->mlx);
 	mlx_loop_hook(data->mlx, &mandelbrot, data->mlx);
 
 	/* NAVIGATION */
 	mlx_loop_hook(data->mlx, &key_navigation, data->mlx);
+	mlx_loop_hook(data->mlx, &iter_hook, data);
 	mlx_scroll_hook(mlx, &scroll_zoom, NULL);
 
 	mlx_loop(data->mlx);

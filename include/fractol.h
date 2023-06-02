@@ -59,4 +59,6 @@ void		scroll_zoom(double xdelta, double ydelta, void *param);
 void		key_navigation(void *param);
 void		mandelbrot(void *param);
 void		square_hook(void *param);
+void		mouse_navigation(void *param);
+void iter_hook(void *param);
 #endif
