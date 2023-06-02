@@ -44,9 +44,11 @@ RM		=	rm
 SDIR	=	src/
 BDIR	=	bonus/
 
-SRCS	=	main.c		\
-			ft_map.c	\
-			tests.c		\
+SRCS	=	main.c				\
+			ft_map.c			\
+			mlx_mandelbrot.c	\
+			mlx_nav_hooks.c		\
+			tests.c				\
 
 
 # Objects
