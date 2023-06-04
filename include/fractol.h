@@ -44,6 +44,7 @@ typedef struct data{
 	mlx_image_t	*image;
 	t_range		xy_range;
 	t_vec		xy_offset;
+	t_vec		pan_start;
 	int			max_iter;
 }	t_data;
 

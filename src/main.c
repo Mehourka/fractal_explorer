@@ -13,7 +13,10 @@ t_data *init_data(void)
 		data->xy_range.min = -2;
 		data->xy_range.max = 2;
 		data->xy_offset.x = 0;
-		data->xy_offset.x = 0;
+		data->xy_offset.y = 0;
+		data->pan_start.x = 0;
+		data->pan_start.y = 0;
+
 		data->max_iter = MAX_ITER;
 	}
 	return (data);
@@ -26,7 +29,20 @@ static void ft_error(void)
 	exit(EXIT_FAILURE);
 }
 
+void capt_mouse_start(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
+{
+	t_data *data = (t_data *) param;
+	int32_t x;
+	int32_t y;
 
+	if(button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
+	{
+		mlx_get_mouse_pos(data->mlx, &x, &y);
+		data->pan_start.x = (float) x;
+		data->pan_start.y = (float) y;
+	}
+	printf("pan start(%f, %f)\n", data->pan_start.x, data->pan_start.y);
+}
 
 int32_t	main(void)
 {
@@ -39,14 +55,20 @@ int32_t	main(void)
 		exit(EXIT_FAILURE);
 
 	mlx_image_to_window(data->mlx, data->image, 0, 0);
-	mlx_loop_hook(data->mlx, &square_hook, data->mlx);
-	// mlx_loop_hook(data->mlx, &mouse_navigation, data->mlx);
-	mlx_loop_hook(data->mlx, &mandelbrot, data->mlx);
+
 
 	/* NAVIGATION */
 	mlx_loop_hook(data->mlx, &key_navigation, data->mlx);
-	mlx_loop_hook(data->mlx, &iter_hook, data);
 	mlx_scroll_hook(mlx, &scroll_zoom, NULL);
+	mlx_mouse_hook(data->mlx, &capt_mouse_start, data);
+	mlx_loop_hook(data->mlx, &mouse_navigation, data);
+
+	/* Fractal */
+	// mlx_loop_hook(data->mlx, &iter_hook, data);
+	// mlx_loop_hook(data->mlx, &mandelbrot, data->mlx);
+
+	/* Test Square */
+	mlx_loop_hook(data->mlx, &square_hook, data->mlx);
 
 	mlx_loop(data->mlx);
 	mlx_terminate(data->mlx);
