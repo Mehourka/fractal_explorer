@@ -31,7 +31,7 @@ void key_navigation(void *param)
 {
 	t_data			*data = param;
 	mlx_t			*mlx = data->mlx;
-	double EPS = 0.02;
+	double EPS = 0.06;
 	double TRANS_EPS = 0.02;
 	double range;
 
@@ -111,12 +111,16 @@ void resize_window(int32_t width, int32_t height, void *param)
 void iter_hook(void *param)
 {
 	t_data *data;
+	double EPS;
 
+	EPS = 50;
 	data = param;
-	if(mlx_is_key_down(data->mlx, MLX_KEY_I) && data->max_iter < 500)
-		data->max_iter += 1;
-	if(mlx_is_key_down(data->mlx, MLX_KEY_O) && data->max_iter > 1)
-		data->max_iter -= 1;
+	if(mlx_is_key_down(data->mlx, MLX_KEY_I) && data->max_iter < 500.0)
+		data->max_iter += 10;
+	if(mlx_is_key_down(data->mlx, MLX_KEY_O) && data->max_iter > 10.0)
+		data->max_iter -= 10;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_C))
-		data->color *= 1.3;
+		data->color *= 1.03;
+
+	printf("max_iter %d \n", data->max_iter);
 }
