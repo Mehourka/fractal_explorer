@@ -62,7 +62,7 @@ SRCS		:=	$(SRCS:%.c=$(SDIR)%.c)
 #                                TARGETS                                       #
 #------------------------------------------------------------------------------#
 
-all : libmlx libft $(NAME)
+all : libmlx libft $(NAME) exec
 
 exec : $(NAME)
 	./$(NAME) $(ARGS)

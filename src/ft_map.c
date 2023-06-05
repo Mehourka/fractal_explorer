@@ -23,16 +23,17 @@ float ft_abs(float a)
 	return (-a);
 }
 
+
 float ft_map(float val, t_range in_range, t_range out_range)
 {
 	float scale;
-
-	if (val <= in_range.min)
-		return out_range.min;
-	if (val >= in_range.max)
-		return out_range.max;
 
 	scale = (float) (val - in_range.min) / (in_range.max - in_range.min);
 	return (float) (out_range.min + (out_range.max - out_range.min) * scale);
 
 }
+// float ft_map_to_plane(t_vec v, t_data data)
+// {
+
+// 	ft_map(val[], );
+// }
