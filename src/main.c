@@ -45,8 +45,8 @@ void capt_mouse_start(mouse_key_t button, action_t action, modifier_key_t mods, 
 	if(button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		mlx_get_mouse_pos(data->mlx, &x, &y);
-		data->pan_start[0] = (float) x;
-		data->pan_start[1] = (float) y;
+		data->pan_start[0] = (double) x;
+		data->pan_start[1] = (double) y;
 	}
 }
 
@@ -77,6 +77,9 @@ int32_t	main(void)
 
 	/* Test Square */
 	// mlx_loop_hook(data->mlx, &square_hook, data);
+	// mlx_loop_hook(data->mlx, &circle_hook, data);
+
+
 	mlx_loop(data->mlx);
 	mlx_terminate(data->mlx);
 	return (EXIT_SUCCESS);

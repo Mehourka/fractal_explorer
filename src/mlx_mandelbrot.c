@@ -1,15 +1,15 @@
 #include "fractol.h"
 
 
-int compute_iterations(float re, float im)
+int compute_iterations(double re, double im)
 {
 	t_data	*data = init_data();
 	int		max_iter = data->max_iter;
 	int		i;
-	float a;
-	float b;
-	float new_a;
-	float new_b;
+	double a;
+	double b;
+	double new_a;
+	double new_b;
 
 	a = 0;
 	b = 0;
@@ -29,18 +29,18 @@ int compute_iterations(float re, float im)
 
 }
 
-float mod2(float v[2])
+double mod2(double v[2])
 {
 	return (v[0] * v[0] + v[1] * v[1]);
 }
 
-float compute_smooth_iterations(float z0[2], t_data *data)
+double compute_smooth_iterations(double z0[2], t_data *data)
 {
 	int		i;
-	float zn[2];
-	float tmp[2];
-	float mod;
-	float smooth_iter;
+	double zn[2];
+	double tmp[2];
+	double mod;
+	double smooth_iter;
 
 	zn[0] = z0[0];
 	zn[1] = z0[1];
@@ -54,7 +54,7 @@ float compute_smooth_iterations(float z0[2], t_data *data)
 		i++;
 	}
 	mod = sqrt(mod2(zn));
-	smooth_iter = (float) i - log2(fmax(1.0, log2(mod)));
+	smooth_iter = (double) i - log2(fmax(1.0, log2(mod)));
 	return (smooth_iter);
 
 }
@@ -71,7 +71,7 @@ void render_pixel(mlx_image_t *img, int i, int j, double num_iter)
 	int32_t		color = data->color;
 	int32_t		opacity;
 
-	opacity = (int) ft_map((float) num_iter, (float[]){0, max_iter}, (float[]){0, 255});
+	opacity = (int) ft_map((double) num_iter, (double[]){0, max_iter}, (double[]){0, 255});
 	color = color << 8 | opacity;
 	if (num_iter == max_iter)
 		mlx_put_pixel(img, i, j, BLACK);
@@ -85,16 +85,16 @@ void mandelbrot(void *param)
 	t_data			*data = param;
 	mlx_t			*mlx = data->mlx;
 	mlx_image_t		*image = data->image;
-	float			*off = data->offset;
-	float			pos[2];
-	float itterations;
+	double			*off = data->offset;
+	double			pos[2];
+	double itterations;
 
 	for (int i = 0; i < image->width; i++)
 	{
 		for(int j= 0; j < image->height; j++)
 		{
-			pos[0] = (float) i;
-			pos[1] = (float) j;
+			pos[0] = (double) i;
+			pos[1] = (double) j;
 			map_vector(pos, data);
 			sub_vector(pos, off);
 			itterations = compute_smooth_iterations(pos, data);

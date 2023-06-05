@@ -4,8 +4,8 @@ void scroll_zoom(double xdelta, double ydelta, void *param)
 {
 	t_data			*data = param;
 	mlx_t			*mlx = data->mlx;
-	float EPS = 0.1;
-	float mouse_pos[2];
+	double EPS = 0.1;
+	double mouse_pos[2];
 	int pix_mouse_pos[2];
 
 	mlx_get_mouse_pos(mlx, pix_mouse_pos, pix_mouse_pos + 1);
@@ -31,9 +31,9 @@ void key_navigation(void *param)
 {
 	t_data			*data = param;
 	mlx_t			*mlx = data->mlx;
-	float EPS = 0.02;
-	float TRANS_EPS = 0.02;
-	float range;
+	double EPS = 0.02;
+	double TRANS_EPS = 0.02;
+	double range;
 
 	range = data->x_range[1] - data->x_range[0];
 
@@ -75,7 +75,7 @@ void mouse_navigation(void *param)
 	mlx_t			*mlx = data->mlx;
 
 	int mouse_pos[2];
-	float delta[2];
+	double delta[2];
 
 
 	if(mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT))
