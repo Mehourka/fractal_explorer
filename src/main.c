@@ -22,6 +22,7 @@ t_data *init_data(void)
 		data->offset[1] = 0;
 		data->pan_start[0] = 0;
 		data->pan_start[1] = 0;
+		data->color = 0xFFFF88;
 
 		data->max_iter = MAX_ITER;
 	}

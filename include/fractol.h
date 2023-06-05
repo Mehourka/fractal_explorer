@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:21:34 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/05 12:43:27 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/05 13:06:08 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 typedef struct data{
 	mlx_t		*mlx;
 	mlx_image_t	*image;
-	int			max_iter;
+	int32_t		max_iter;
+	uint32_t		color;
 	float		x_range[2];
 	float		y_range[2];
 	float		x_pix_range[2];

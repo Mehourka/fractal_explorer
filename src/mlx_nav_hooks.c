@@ -87,6 +87,7 @@ void mouse_navigation(void *param)
 		map_vector(data->pan_start, data);
 		sub_vector(delta, data->pan_start);
 		add_vector(data->offset, delta);
+
 		data->pan_start[0] = mouse_pos[0];
 		data->pan_start[1] = mouse_pos[1];
 	}
@@ -96,11 +97,17 @@ void resize_window(int32_t width, int32_t height, void *param)
 	t_data *data;
 
 	data = param;
+	print_vector(data->x_range, "xrange Before");
 	mult_vector(data->x_range, width / data->x_pix_range[1]); 
+	print_vector(data->x_range, "xrange After");
 	mult_vector(data->y_range, height / data->y_pix_range[1] ); 
+
 	mlx_resize_image(data->image, width, height);
 	data->y_pix_range[1] = height;
 	data->x_pix_range[1] = width;
+
+
+	
 }
 
 void iter_hook(void *param)
@@ -112,4 +119,6 @@ void iter_hook(void *param)
 		data->max_iter += 1;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_O) && data->max_iter > 1)
 		data->max_iter -= 1;
+	if(mlx_is_key_down(data->mlx, MLX_KEY_C))
+		data->color *= 1.3;
 }

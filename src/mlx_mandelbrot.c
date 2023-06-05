@@ -38,7 +38,7 @@ void render_pixel(mlx_image_t *img, int i, int j, int num_iter)
 {
 	t_data *data = init_data();
 	int max_iter = data->max_iter;
-	int32_t		color = 0xFFFF88;
+	int32_t		color = data->color;
 	int32_t		opacity;
 
 	opacity = ft_map(num_iter, (float[]){0, max_iter}, (float[]){0, 255});
