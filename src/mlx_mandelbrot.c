@@ -38,11 +38,10 @@ void render_pixel(mlx_image_t *img, int i, int j, int num_iter)
 {
 	t_data *data = init_data();
 	int max_iter = data->max_iter;
-	int32_t		color = 0xFF2288;
+	int32_t		color = 0xFFFF88;
 	int32_t		opacity;
 
 	opacity = ft_map(num_iter, (float[]){0, max_iter}, (float[]){0, 255});
-	// color = get_rgba(255,255, 255, opacity);
 	color = color << 8 | opacity;
 	if (num_iter == max_iter)
 		mlx_put_pixel(img, i, j, BLACK);

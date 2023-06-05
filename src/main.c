@@ -8,12 +8,12 @@ t_data *init_data(void)
 	if (!data)
 	{
 		data = malloc(sizeof(t_data));
-		data->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
+		data->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 		data->image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 		data->x_range[0] = -2;
 		data->x_range[1] = 2;
-		data->y_range[0] = 2;
-		data->y_range[1] = -2;
+		data->y_range[0] = -data->x_range[0] * HEIGHT / WIDTH;
+		data->y_range[1] = -data->x_range[1] * HEIGHT / WIDTH;
 		data->x_pix_range[0] = 0;
 		data->x_pix_range[1] = WIDTH;
 		data->y_pix_range[0] = 0;
@@ -68,13 +68,14 @@ int32_t	main(void)
 	mlx_mouse_hook(data->mlx, &capt_mouse_start, data);
 	mlx_loop_hook(data->mlx, &mouse_navigation, data);
 
+	mlx_resize_hook(mlx, &resize_window, data);
+
 	/* Fractal */
 	mlx_loop_hook(data->mlx, &iter_hook, data);
 	mlx_loop_hook(data->mlx, &mandelbrot, data);
 
 	/* Test Square */
 	// mlx_loop_hook(data->mlx, &square_hook, data);
-
 	mlx_loop(data->mlx);
 	mlx_terminate(data->mlx);
 	return (EXIT_SUCCESS);

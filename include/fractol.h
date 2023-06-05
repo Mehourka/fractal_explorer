@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:21:34 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/05 11:24:48 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/05 12:43:27 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "MLX42/MLX42.h"
 # include <string.h>
 
-# define WIDTH 512
+# define WIDTH 1024
 # define HEIGHT 512
 # define MAX_ITER 20
 
@@ -53,6 +53,7 @@ void		my_scrollhook(double xdelta, double ydelta, void* param);
 void		key_navigation(void *param);
 void		scroll_zoom(double xdelta, double ydelta, void *param);
 void		mouse_navigation(void *param);
+void		resize_window(int32_t width, int32_t height, void *param);
 
 void		square_hook(void *param);
 
