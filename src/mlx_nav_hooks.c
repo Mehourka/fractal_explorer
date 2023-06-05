@@ -2,41 +2,37 @@
 
 void scroll_zoom(double xdelta, double ydelta, void *param)
 {
-	t_data			*data = init_data();
+	t_data			*data = param;
 	mlx_t			*mlx = data->mlx;
 	float EPS = 0.1;
+	float mouse_pos[2];
 
-	int32_t mouseX;
-	int32_t mouseY;
-	mlx_get_mouse_pos(mlx, &mouseX, &mouseY);
-	int dx = ft_map(mouseX, (t_range){0, WIDTH}, data->xy_range);
-	int dy = ft_map(mouseY, (t_range){0, HEIGHT}, data->xy_range);
+	// mlx_get_mouse_pos(mlx, mouse_pos, mouse_pos + 1);
+	// map_vector(mouse_pos, data);
+	// int dx = ft_map(mouseX, (t_range){0, WIDTH}, data->xy_range);
+	// int dy = ft_map(mouseY, (t_range){0, HEIGHT}, data->xy_range);
 
 	if (ydelta < 0)
 	{
-		data->xy_offset.x -= dx * 0.5;
-		data->xy_offset.y -= dy * 0.5;
-		data->xy_range.min *= 1 + EPS;
-		data->xy_range.max *= 1 + EPS;
+		mul_vector(data->x_range, 1 + EPS);
+		mul_vector(data->y_range, 1 + EPS);
 	}
 	if (ydelta > 0)
 	{
-		data->xy_offset.x += dx * 0.5;
-		data->xy_offset.y += dy * 0.5;
-		data->xy_range.min *= 1 - EPS;
-		data->xy_range.max *= 1 - EPS;
+		mul_vector(data->x_range, 1 - EPS);
+		mul_vector(data->y_range, 1 - EPS);
 	}
 }
 
 void key_navigation(void *param)
 {
-	t_data			*data = init_data();
+	t_data			*data = param;
 	mlx_t			*mlx = data->mlx;
 	float EPS = 0.02;
-	float TRANS_EPS = 10;
+	float TRANS_EPS = 0.02;
 	float range;
 
-	range = data->xy_range.max - data->xy_range.min;
+	range = data->x_range[1] - data->x_range[0];
 
 	// Exit
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
@@ -47,49 +43,50 @@ void key_navigation(void *param)
 	// Zoom
 	if (mlx_is_key_down(mlx, MLX_KEY_PAGE_UP))
 	{
-		data->xy_range.min *= 1 - EPS;
-		data->xy_range.max *= 1 - EPS;
+		mul_vector(data->x_range, 1 - EPS);
+		mul_vector(data->y_range, 1 - EPS);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_PAGE_DOWN))
 	{
-		data->xy_range.min *= 1 + EPS;
-		data->xy_range.max *= 1 + EPS;
+		mul_vector(data->x_range, 1 + EPS);
+		mul_vector(data->y_range, 1 + EPS);
 	}
 
 	// Translate
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		data->xy_offset.y +=  TRANS_EPS * range;
+		data->offset[1] -=  TRANS_EPS * range;
 
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		data->xy_offset.y -=  TRANS_EPS * range;
-
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		data->xy_offset.x +=  TRANS_EPS * range;
+		data->offset[1] +=  TRANS_EPS * range;
 
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		data->xy_offset.x -=  TRANS_EPS * range;
+		data->offset[0] -=  TRANS_EPS * range;
+
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+		data->offset[0] +=  TRANS_EPS * range;
 }
 
 void mouse_navigation(void *param)
 {
 	t_data			*data = param;
 	mlx_t			*mlx = data->mlx;
-	float EPS = 0.02;
-	float TRANS_EPS = 0.2;
-	float range;
 
-	int32_t mouseX;
-	int32_t mouseY;
+	int mouse_pos[2];
+	float delta[2];
 
 
 	if(mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT))
 	{
-		mlx_get_mouse_pos(mlx, &mouseX, &mouseY);
-		data->xy_offset.x += mouseX - data->pan_start.x;
-		data->xy_offset.y += mouseY - data->pan_start.y;
-		// printf("(%d, %d)\n", xdelta, ydelta);
-		data->pan_start.x = mouseX;
-		data->pan_start.y = mouseY;
+		mlx_get_mouse_pos(mlx, mouse_pos, mouse_pos + 1);
+		delta[0] = mouse_pos[0];
+		delta[1] = mouse_pos[1];
+		map_vector(delta, data);
+		map_vector(data->pan_start, data);
+		sub_vector(delta, data->pan_start);
+		add_vector(data->offset, delta);
+
+		data->pan_start[0] = mouse_pos[0];
+		data->pan_start[1] = mouse_pos[1];
 	}
 }
 

@@ -10,12 +10,18 @@ t_data *init_data(void)
 		data = malloc(sizeof(t_data));
 		data->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
 		data->image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-		data->xy_range.min = -2;
-		data->xy_range.max = 2;
-		data->xy_offset.x = 0;
-		data->xy_offset.y = 0;
-		data->pan_start.x = 0;
-		data->pan_start.y = 0;
+		data->x_range[0] = -2;
+		data->x_range[1] = 2;
+		data->y_range[0] = 2;
+		data->y_range[1] = -2;
+		data->x_pix_range[0] = 0;
+		data->x_pix_range[1] = WIDTH;
+		data->y_pix_range[0] = 0;
+		data->y_pix_range[1] = HEIGHT;
+		data->offset[0] = 0;
+		data->offset[1] = 0;
+		data->pan_start[0] = 0;
+		data->pan_start[1] = 0;
 
 		data->max_iter = MAX_ITER;
 	}
@@ -38,10 +44,10 @@ void capt_mouse_start(mouse_key_t button, action_t action, modifier_key_t mods, 
 	if(button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		mlx_get_mouse_pos(data->mlx, &x, &y);
-		data->pan_start.x = (float) x;
-		data->pan_start.y = (float) y;
+		data->pan_start[0] = (float) x;
+		data->pan_start[1] = (float) y;
 	}
-	printf("pan start(%f, %f)\n", data->pan_start.x, data->pan_start.y);
+	printf("pan start(%f, %f)\n", data->pan_start[0], data->pan_start[1]);
 }
 
 int32_t	main(void)
@@ -58,8 +64,8 @@ int32_t	main(void)
 
 
 	/* NAVIGATION */
-	mlx_loop_hook(data->mlx, &key_navigation, data->mlx);
-	mlx_scroll_hook(mlx, &scroll_zoom, NULL);
+	mlx_loop_hook(data->mlx, &key_navigation, data);
+	mlx_scroll_hook(mlx, &scroll_zoom, data);
 	mlx_mouse_hook(data->mlx, &capt_mouse_start, data);
 	mlx_loop_hook(data->mlx, &mouse_navigation, data);
 
@@ -68,7 +74,7 @@ int32_t	main(void)
 	// mlx_loop_hook(data->mlx, &mandelbrot, data->mlx);
 
 	/* Test Square */
-	mlx_loop_hook(data->mlx, &square_hook, data->mlx);
+	mlx_loop_hook(data->mlx, &square_hook, data);
 
 	mlx_loop(data->mlx);
 	mlx_terminate(data->mlx);
