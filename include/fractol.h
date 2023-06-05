@@ -20,13 +20,15 @@
 # include <unistd.h>
 # include "MLX42/MLX42.h"
 # include <string.h>
+# include <math.h>
 
-# define WIDTH 1024
-# define HEIGHT 512
+# define WIDTH 720
+# define HEIGHT 580
 # define MAX_ITER 20
 
 # define WHITE 0xFFFFFFFF
 # define BLACK 0x000000FF
+# define COLOR 0xaa22ccFF
 #define BPP sizeof(int32_t)
 
 typedef struct data{
@@ -41,6 +43,7 @@ typedef struct data{
 	float		offset[2];
 	float		pan_start[2];
 }	t_data;
+
 
 int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 t_data		*init_data();
@@ -63,7 +66,7 @@ void		add_vector(float v[2], float u[2]);
 void		sub_vector(float v[2], float u[2]);
 void		mult_vector(float v[2], float c);
 void		cast_vector(float v[2], int u[2]);
-void		print_vector(float v[2], char *str);
+void		print_vector(float v[2]);
 
 void		iter_hook(void *param);
 void		mandelbrot(void *param);

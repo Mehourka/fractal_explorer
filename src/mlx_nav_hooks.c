@@ -97,17 +97,15 @@ void resize_window(int32_t width, int32_t height, void *param)
 	t_data *data;
 
 	data = param;
-	print_vector(data->x_range, "xrange Before");
-	mult_vector(data->x_range, width / data->x_pix_range[1]); 
-	print_vector(data->x_range, "xrange After");
-	mult_vector(data->y_range, height / data->y_pix_range[1] ); 
+	mult_vector(data->x_range, width / data->x_pix_range[1]);
+	mult_vector(data->y_range, height / data->y_pix_range[1] );
 
 	mlx_resize_image(data->image, width, height);
 	data->y_pix_range[1] = height;
 	data->x_pix_range[1] = width;
 
 
-	
+
 }
 
 void iter_hook(void *param)
