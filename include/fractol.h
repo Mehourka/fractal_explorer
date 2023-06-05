@@ -43,20 +43,25 @@ typedef struct data{
 
 int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 t_data		*init_data();
-void		my_scrollhook(double xdelta, double ydelta, void* param);
-void		my_keyhook(mlx_key_data_t keydata, void* param);
 void		ft_randomize(void* param);
 void		ft_hook(void* param);
 float		ft_map(float val, float in_range[2], float out_range[2]);
 float		ft_abs(float a);
+
+void		my_keyhook(mlx_key_data_t keydata, void* param);
+void		my_scrollhook(double xdelta, double ydelta, void* param);
 void		key_navigation(void *param);
 void		scroll_zoom(double xdelta, double ydelta, void *param);
-// void		mandelbrot(void *param);
+void		mouse_navigation(void *param);
+
+void		square_hook(void *param);
+
 void		map_vector(float v[2], t_data *data);
 void		add_vector(float v[2], float u[2]);
+void		sub_vector(float v[2], float u[2]);
 void		mul_vector(float v[2], float c);
 void		print_vector(float v[2]);
-void		square_hook(void *param);
-void		mouse_navigation(void *param);
-// void iter_hook(void *param);
+
+void		iter_hook(void *param);
+void		mandelbrot(void *param);
 #endif

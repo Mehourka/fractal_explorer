@@ -70,11 +70,11 @@ int32_t	main(void)
 	mlx_loop_hook(data->mlx, &mouse_navigation, data);
 
 	/* Fractal */
-	// mlx_loop_hook(data->mlx, &iter_hook, data);
-	// mlx_loop_hook(data->mlx, &mandelbrot, data->mlx);
+	mlx_loop_hook(data->mlx, &iter_hook, data);
+	mlx_loop_hook(data->mlx, &mandelbrot, data);
 
 	/* Test Square */
-	mlx_loop_hook(data->mlx, &square_hook, data);
+	// mlx_loop_hook(data->mlx, &square_hook, data);
 
 	mlx_loop(data->mlx);
 	mlx_terminate(data->mlx);
