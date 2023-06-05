@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 12:50:46 by kmehour           #+#    #+#              #
-#    Updated: 2023/05/29 16:40:16 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/05 11:22:17 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ LIBFT	=	$(LDIR)/libft
 LIBMLX	=	$(LDIR)/MLX42
 
 INCLUDES=	-I $(LDIR)/libft -I $(IDIR) -I $(LIBMLX)/include
-LIBS	=	$(LIBFT)/libft.a $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBS	=	$(LIBFT)/libft.a $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 
 # Colors
@@ -48,6 +48,7 @@ SRCS	=	main.c				\
 			ft_map.c			\
 			mlx_mandelbrot.c	\
 			mlx_nav_hooks.c		\
+			mlx_vectors.c		\
 			tests.c				\
 
 

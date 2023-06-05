@@ -6,22 +6,25 @@ void scroll_zoom(double xdelta, double ydelta, void *param)
 	mlx_t			*mlx = data->mlx;
 	float EPS = 0.1;
 	float mouse_pos[2];
+	int pix_mouse_pos[2];
 
-	// mlx_get_mouse_pos(mlx, mouse_pos, mouse_pos + 1);
-	// map_vector(mouse_pos, data);
-	// int dx = ft_map(mouseX, (t_range){0, WIDTH}, data->xy_range);
-	// int dy = ft_map(mouseY, (t_range){0, HEIGHT}, data->xy_range);
+	mlx_get_mouse_pos(mlx, pix_mouse_pos, pix_mouse_pos + 1);
+	cast_vector(mouse_pos, pix_mouse_pos);
+	map_vector(mouse_pos, data);
 
 	if (ydelta < 0)
 	{
-		mul_vector(data->x_range, 1 + EPS);
-		mul_vector(data->y_range, 1 + EPS);
+		mult_vector(data->x_range, 1 + EPS);
+		mult_vector(data->y_range, 1 + EPS);
+		mult_vector(mouse_pos, -EPS);
 	}
 	if (ydelta > 0)
 	{
-		mul_vector(data->x_range, 1 - EPS);
-		mul_vector(data->y_range, 1 - EPS);
+		mult_vector(data->x_range, 1 - EPS);
+		mult_vector(data->y_range, 1 - EPS);
+		mult_vector(mouse_pos, EPS);
 	}
+	sub_vector(data->offset, mouse_pos);
 }
 
 void key_navigation(void *param)
@@ -43,13 +46,13 @@ void key_navigation(void *param)
 	// Zoom
 	if (mlx_is_key_down(mlx, MLX_KEY_PAGE_UP))
 	{
-		mul_vector(data->x_range, 1 - EPS);
-		mul_vector(data->y_range, 1 - EPS);
+		mult_vector(data->x_range, 1 - EPS);
+		mult_vector(data->y_range, 1 - EPS);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_PAGE_DOWN))
 	{
-		mul_vector(data->x_range, 1 + EPS);
-		mul_vector(data->y_range, 1 + EPS);
+		mult_vector(data->x_range, 1 + EPS);
+		mult_vector(data->y_range, 1 + EPS);
 	}
 
 	// Translate

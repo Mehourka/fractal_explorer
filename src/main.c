@@ -47,7 +47,6 @@ void capt_mouse_start(mouse_key_t button, action_t action, modifier_key_t mods, 
 		data->pan_start[0] = (float) x;
 		data->pan_start[1] = (float) y;
 	}
-	printf("pan start(%f, %f)\n", data->pan_start[0], data->pan_start[1]);
 }
 
 int32_t	main(void)

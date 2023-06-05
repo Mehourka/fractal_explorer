@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:21:34 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/29 16:40:50 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/05 11:24:48 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void		square_hook(void *param);
 void		map_vector(float v[2], t_data *data);
 void		add_vector(float v[2], float u[2]);
 void		sub_vector(float v[2], float u[2]);
-void		mul_vector(float v[2], float c);
-void		print_vector(float v[2]);
+void		mult_vector(float v[2], float c);
+void		cast_vector(float v[2], int u[2]);
+void		print_vector(float v[2], char *str);
 
 void		iter_hook(void *param);
 void		mandelbrot(void *param);
