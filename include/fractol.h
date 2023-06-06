@@ -22,13 +22,14 @@
 # include <string.h>
 # include <math.h>
 
-# define WIDTH 300
-# define HEIGHT 300
+# define WIDTH 512
+# define HEIGHT 512
 # define MAX_ITER 20
 
 # define WHITE 0xFFFFFFFF
 # define BLACK 0x000000FF
 # define COLOR 0x00FFFFFF
+# define M_PI 3.14159265358979323846  /* pi */
 
 # define FRAC_JULIA 1
 # define FRAC_MANDL 2
@@ -68,6 +69,8 @@ void		print_vector(double v[2]);
 
 void		iter_hook(void *param);
 void		mandelbrot(void *param);
+void		julia(void *param);
+void		julia_mouse_control(double xpos, double ypos, void* param);
 
 /* ------------------------------------------------ */
 /*						TEST						*/

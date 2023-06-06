@@ -50,6 +50,7 @@ SRCS	=	main.c				\
 			mlx_nav_hooks.c		\
 			mlx_vectors.c		\
 			mlx_init.c			\
+			mlx_julia.c			\
 			tests.c				\
 
 

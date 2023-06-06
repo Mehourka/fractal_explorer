@@ -25,6 +25,9 @@ t_data *init_data(void)
 		data->pan_start[1] = 0;
 		data->color = COLOR;
 
+		data->julia_c[0] = 0.2345;
+		data->julia_c[0] = 0.3254;
+
 
 		data->max_iter = MAX_ITER;
 	}
