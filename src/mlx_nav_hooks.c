@@ -121,6 +121,4 @@ void iter_hook(void *param)
 		data->max_iter -= 10;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_C))
 		data->color *= 1.03;
-
-	printf("max_iter %d \n", data->max_iter);
 }

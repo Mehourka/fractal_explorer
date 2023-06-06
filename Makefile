@@ -49,6 +49,7 @@ SRCS	=	main.c				\
 			mlx_mandelbrot.c	\
 			mlx_nav_hooks.c		\
 			mlx_vectors.c		\
+			mlx_init.c			\
 			tests.c				\
 
 

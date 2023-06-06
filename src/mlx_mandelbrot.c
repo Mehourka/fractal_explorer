@@ -1,70 +1,45 @@
 #include "fractol.h"
 
-
-int compute_iterations(double re, double im)
-{
-	t_data	*data = init_data();
-	int		max_iter = data->max_iter;
-	int		i;
-	double a;
-	double b;
-	double new_a;
-	double new_b;
-
-	a = 0;
-	b = 0;
-	i = 0;
-	while(i < max_iter)
-	{
-		new_a = a * a - b * b ;
-		new_b = 2 * a * b ;
-
-		a = new_a + re;
-		b = new_b + im;
-		if (a * a + b * b > 4)
-			break;
-		i++;
-	}
-	return (i);
-
-}
-
 double mod2(double v[2])
 {
 	return (v[0] * v[0] + v[1] * v[1]);
 }
 
-double compute_smooth_iterations(double z0[2], t_data *data)
+static double compute_smooth_iterations(double z0[2], t_data *data)
 {
 	int		i;
 	double zn[2];
-	double tmp[2];
+	double tmp;
 	double mod;
 	double smooth_iter;
 
 	zn[0] = z0[0];
 	zn[1] = z0[1];
 	i = 0;
-	while(i < data->max_iter && mod2(zn) < 4)
+	while(i < data->max_iter && mod2(zn) < 4.0)
 	{
-		tmp[0] = zn[0] * zn[0] - zn[1] * zn[1] ;
-		tmp[1] = 2 * zn[0] * zn[1];
-		zn[0] = tmp[0] + z0[0];
-		zn[1] = tmp[1] + z0[1];
+		tmp = zn[0];
+		zn[0] = zn[0] * zn[0] - zn[1] * zn[1] + z0[0];
+		zn[1] = 2.0 * zn[1] * tmp  + z0[1];
 		i++;
 	}
-	mod = sqrt(mod2(zn));
-	smooth_iter = (double) i - log2(fmax(1.0, log2(mod)));
+	// mod = sqrt(mod2(zn));
+	// smooth_iter = (double) i - log2(fmax(1.0, log2(mod)));
+	// if (smooth_iter < 0)
+	// {
+	// 	printf("%d, %f, %f, %f\n", i, mod, log(fmax(1.0f, log(mod))), smooth_iter);
+	// }
+	smooth_iter = (double) i;
 	return (smooth_iter);
 
 }
 
-int get_rgba(int r, int g, int b, int a)
+static int get_rgba(int r, int g, int b, int a)
 {
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void render_pixel(mlx_image_t *img, int i, int j, double num_iter)
+static void render_pixel(mlx_image_t *img, int i, int j, double num_iter)
 {
 	t_data *data = init_data();
 	int max_iter = data->max_iter;

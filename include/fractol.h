@@ -28,7 +28,10 @@
 
 # define WHITE 0xFFFFFFFF
 # define BLACK 0x000000FF
-# define COLOR 0xaa22ccFF
+# define COLOR 0x00FFFFFF
+
+# define FRAC_JULIA 1
+# define FRAC_MANDL 2
 #define BPP sizeof(int32_t)
 
 typedef struct data{
@@ -40,27 +43,21 @@ typedef struct data{
 	double		y_range[2];
 	double		x_pix_range[2];
 	double		y_pix_range[2];
+	double		julia_c[2];
 	double		offset[2];
 	double		pan_start[2];
 }	t_data;
 
 
 int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-t_data		*init_data();
-void		ft_randomize(void* param);
-void		ft_hook(void* param);
+t_data		*init_data(void);
 double		ft_map(double val, double in_range[2], double out_range[2]);
-double		ft_abs(double a);
 
-void		my_keyhook(mlx_key_data_t keydata, void* param);
-void		my_scrollhook(double xdelta, double ydelta, void* param);
 void		key_navigation(void *param);
 void		scroll_zoom(double xdelta, double ydelta, void *param);
 void		mouse_navigation(void *param);
 void		resize_window(int32_t width, int32_t height, void *param);
 
-void		square_hook(void *param);
-void		circle_hook(void *param);
 
 void		map_vector(double v[2], t_data *data);
 void		add_vector(double v[2], double u[2]);
@@ -71,4 +68,10 @@ void		print_vector(double v[2]);
 
 void		iter_hook(void *param);
 void		mandelbrot(void *param);
+
+/* ------------------------------------------------ */
+/*						TEST						*/
+/* ------------------------------------------------ */
+void		square_hook(void *param);
+void		circle_hook(void *param);
 #endif
