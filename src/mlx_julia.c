@@ -24,7 +24,9 @@ static double compute_smooth_iterations(double pos[2], t_data *data)
 		zn[1] = 2.0 * zn[1] * tmp  + julia_c[1];
 		i++;
 	}
-	smooth_iter = (double) i;
+	double mod = sqrt(mod2(zn));
+	smooth_iter = (double) i - log(log(mod)) / log(2.0);
+	// smooth_iter = (double) i + 1 - log2(fmax(1.0, log2(mod)));
 	return (smooth_iter);
 
 }
@@ -42,11 +44,22 @@ static  void render_pixel(mlx_image_t *img, int i, int j, double num_iter)
 	int32_t		opacity;
 
 	opacity = (int) ft_map((double) num_iter, (double[]){0, max_iter}, (double[]){0, 255});
+	// opacity = sqrt(opacity);
+	// opacity = (int) ft_map((double) opacity, (double[]){0, 1}, (double[]){100,150});
 	color = color << 8 | opacity;
+	// color = get_rgba(opacity, opacity, opacity, 0xFF);
 	if (num_iter == max_iter)
 		mlx_put_pixel(img, i, j, BLACK);
 	else
 		mlx_put_pixel(img, i, j, color);
+}
+
+void julia_time(t_data *data)
+{
+	data->t += 0.0005;
+
+	data->julia_c[0] = cos(data->t + M_PI / 4);
+	data->julia_c[1] = cos(data->t + M_PI / 2);
 }
 
 void julia(void *param)
@@ -59,6 +72,7 @@ void julia(void *param)
 	double			pos[2];
 	double itterations;
 
+	// julia_time(data);
 	for (int i = 0; i < image->width; i++)
 	{
 		for(int j= 0; j < image->height; j++)

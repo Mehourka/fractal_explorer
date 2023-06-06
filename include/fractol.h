@@ -24,7 +24,7 @@
 
 # define WIDTH 512
 # define HEIGHT 512
-# define MAX_ITER 20
+# define MAX_ITER 50
 
 # define WHITE 0xFFFFFFFF
 # define BLACK 0x000000FF
@@ -47,6 +47,7 @@ typedef struct data{
 	double		julia_c[2];
 	double		offset[2];
 	double		pan_start[2];
+	double		t;
 }	t_data;
 
 

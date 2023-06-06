@@ -27,6 +27,7 @@ t_data *init_data(void)
 
 		data->julia_c[0] = 0.2345;
 		data->julia_c[0] = 0.3254;
+		data->t			 = 0;
 
 
 		data->max_iter = MAX_ITER;
