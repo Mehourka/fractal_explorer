@@ -53,6 +53,15 @@ SRCS	=	main.c				\
 			mlx_julia.c			\
 			tests.c				\
 
+BONUS	= 	bonus_main.c				\
+			bonus_ft_map.c				\
+			bonus_mlx_mandelbrot.c		\
+			bonus_mlx_nav_hooks.c		\
+			bonus_mlx_vectors.c			\
+			bonus_mlx_init.c			\
+			bonus_mlx_julia.c			\
+			bonus_tests.c				\
+
 
 # Objects
 ODIR	=	obj/
