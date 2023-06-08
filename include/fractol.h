@@ -22,8 +22,8 @@
 # include <string.h>
 # include <math.h>
 
-# define WIDTH 512
-# define HEIGHT 512
+# define WIDTH 512//512512
+# define HEIGHT 512//512512
 # define MAX_ITER 50
 # define N_THREADS 6
 
