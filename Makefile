@@ -14,35 +14,34 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-
-# Tester : git@github.com:LeoFu9487/push_swap_tester.git
-
-NAME	=	fractol
-LDIR	=	lib/
-IDIR	=	include/
-
-LIBFT	=	$(LDIR)/libft
-LIBMLX	=	$(LDIR)/MLX42
-
-INCLUDES=	-I $(LDIR)/libft -I $(IDIR) -I $(LIBMLX)/include
-LIBS	=	$(LIBFT)/libft.a $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-
-
 # Colors
 GREEN	=	\033[0;32m
 RED		=	\033[0;31m
 BLUE	=	\033[0;34m
 NC		=	\033[0m
 
+
+# Tester : git@github.com:LeoFu9487/push_swap_tester.git
+
+NAME	=	fractol
+LIBDIR	=	lib/
+INCDIR	=	include/
+SRCDIR	=	src/
+BONDIR	=	bonus/
+
+LIBFT	=	$(LIBDIR)/libft
+LIBMLX	=	$(LIBDIR)/MLX42
+
+INCLUDES=	-I $(LIBDIR)/libft -I $(INCDIR) -I $(LIBMLX)/include
+LIBS	=	$(LIBFT)/libft.a $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+
 # Compiler and flags
 CC		=	gcc
-# CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra
 CFLAGS +=	-Wunreachable-code -Ofast
 RM		=	rm
 
 # Sources
-SDIR	=	src/
-BDIR	=	bonus/
 
 SRCS	=	main.c				\
 			ft_map.c			\
@@ -52,42 +51,35 @@ SRCS	=	main.c				\
 			mlx_vectors.c		\
 			mlx_init.c			\
 			mlx_julia.c			\
-			tests.c				\
+			mlx_utils.c				\
 
 BONUS	= 	bonus_main.c				\
-			bonus_ft_map.c				\
-			bonus_mlx_mandelbrot.c		\
-			bonus_mlx_nav_hooks.c		\
-			bonus_mlx_vectors.c			\
-			bonus_mlx_init.c			\
-			bonus_mlx_julia.c			\
-			bonus_tests.c				\
 
 
 # Objects
-ODIR	=	obj/
-OBJS		:=	$(SRCS:%.c=$(ODIR)%.o)
-
-SRCS		:=	$(SRCS:%.c=$(SDIR)%.c)
+OBJDIR	=	obj/
+OBJS		:=	$(SRCS:%.c=$(OBJDIR)%.o)
+SRCS		:=	$(SRCS:%.c=$(SRCDIR)%.c)
+BONUS		:=	$(BONUS:%=$(BONDIR)%)
+DEPS		:=	$(OBJS:%.o=%.d)
 
 
 #------------------------------------------------------------------------------#
 #                                TARGETS                                       #
 #------------------------------------------------------------------------------#
 
-all : libmlx libft $(NAME) exec
+all : libmlx libft $(NAME) execute
 
-exec : $(NAME)
+execute : $(NAME)
 	./$(NAME) $(ARGS)
 
-# Compile exec
+# Compile program
 $(NAME) : $(OBJS)
 	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME) -I. $(INCLUDES)
 
 # Compile libft
 libft:
-# @echo "$(BLUE)	Compiling libft ...	$(NC)"m
 	@ $(MAKE) -C $(LIBFT) -s
 
 #Compiling libmlx
@@ -95,20 +87,20 @@ libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4 -s
 
 # Compile objects
-$(ODIR)%.o : $(SDIR)%.c
-	@mkdir -p $(ODIR);
-	@$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDES)
+$(OBJDIR)%.o : $(SRCDIR)%.c
+	@mkdir -p $(OBJDIR);
+	@$(CC) -c $(CFLAGS) -MMD -MP $< -o $@ $(INCLUDES)
 
 # Compile Bonus
-$(ODIR)%.o : $(BDIR)%.c
-	@mkdir -p $(ODIR);
-	@$(CC) -c $(CFLAGS) $< -o $@
+$(OBJDIR)%.o : $(BONDIR)%.c
+	@mkdir -p $(OBJDIR);
+	@$(CC) -c $(CFLAGS) -MMD -MP $< -o $@
 
-
+-include $(DEPS)
 
 # Remove objects
 clean :
-	@$(RM) -rf $(ODIR)
+	@$(RM) -rf $(OBJDIR)
 	@rm -rf $(LIBMLX)/build
 	@echo "$(RED)	Removed objects	$(NC)"
 
@@ -118,7 +110,7 @@ fclean : clean
 	@$(RM) -rf $(NAME).dSYM
 
 	@$(MAKE) fclean -C $(LIBFT) -s
-	@echo "$(RED)	Removed executablesand libft	$(NC)"
+	@echo "$(RED)	Removed executables and libft	$(NC)"
 
 # Remake
 re : fclean all
@@ -126,12 +118,6 @@ re : fclean all
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(ARGS)
-
-test:
-	@echo $(dir $(LIBFT))
-
-visualizer:
-	./push_swap_visualizer/build/bin/visualizer
 
 .PHONY:
 	clean fclean re test all directories visualizer leak libft libmlx
