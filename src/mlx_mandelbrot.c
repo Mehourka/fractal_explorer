@@ -1,17 +1,12 @@
 #include "fractol.h"
 
-double mod2(double v[2])
-{
-	return (v[0] * v[0] + v[1] * v[1]);
-}
-
 static double compute_smooth_iterations(double z0[2], t_data *data)
 {
-	int		i;
-	double zn[2];
-	double tmp;
-	double mod;
-	double smooth_iter;
+	uint32_t	i;
+	double		zn[2];
+	double		tmp;
+	double		mod;
+	double		smooth_iter;
 
 	zn[0] = z0[0];
 	zn[1] = z0[1];
@@ -23,56 +18,35 @@ static double compute_smooth_iterations(double z0[2], t_data *data)
 		zn[1] = 2.0 * zn[1] * tmp  + z0[1];
 		i++;
 	}
-	// mod = sqrt(mod2(zn));
-	// smooth_iter = (double) i - log2(fmax(1.0, log2(mod)));
-	// if (smooth_iter < 0)
-	// {
-	// 	printf("%d, %f, %f, %f\n", i, mod, log(fmax(1.0f, log(mod))), smooth_iter);
-	// }
-	smooth_iter = (double) i;
+	mod = sqrt(mod2(zn));
+	if (i == data->max_iter)
+		return (double) i;
+	smooth_iter = (double) i + 1 - log(log(mod)) / log(2.0);
 	return (smooth_iter);
-
-}
-
-static int get_rgba(int r, int g, int b, int a)
-{
-    return (r << 24 | g << 16 | b << 8 | a);
-}
-
-static void render_pixel(mlx_image_t *img, int i, int j, double num_iter)
-{
-	t_data *data = init_data();
-	int max_iter = data->max_iter;
-	int32_t		color = data->color;
-	int32_t		opacity;
-
-	opacity = (int) ft_map((double) num_iter, (double[]){0, max_iter}, (double[]){0, 255});
-	color = color << 8 | opacity;
-	if (num_iter == max_iter)
-		mlx_put_pixel(img, i, j, BLACK);
-	else
-		mlx_put_pixel(img, i, j, color);
 }
 
 void mandelbrot(void *param)
 {
 	t_data			*data = param;
-	mlx_t			*mlx = data->mlx;
-	mlx_image_t		*image = data->image;
-	double			*off = data->offset;
 	double			pos[2];
-	double itterations;
+	double iterations;
+	uint32_t	i;
+	uint32_t	j;
 
-	for (int i = 0; i < image->width; i++)
+	i = 0;
+	while (i < data->image->width)
 	{
-		for(int j= 0; j < image->height; j++)
+		j = 0;
+		while(j < data->image->height)
 		{
 			pos[0] = (double) i;
 			pos[1] = (double) j;
 			map_vector(pos, data);
-			sub_vector(pos, off);
-			itterations = compute_smooth_iterations(pos, data);
-			render_pixel(image, i, j, itterations);
+			sub_vector(pos, data->offset);
+			iterations = compute_smooth_iterations(pos, data);
+			render_pixel(data->image, i, j, iterations);
+			j++;
 		}
+		i++;
 	}
 }

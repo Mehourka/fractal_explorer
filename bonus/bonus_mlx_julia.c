@@ -78,6 +78,10 @@ void julia_mouse_control(double xpos, double ypos, void* param)
 	data->julia_c[1] = ft_map(ypos, data->y_range, (double[]){-M_PI / 2, M_PI / 2});
 }
 
+/* ****************************************************** */
+/* 						BONUS							  */
+/* ****************************************************** */
+# include <pthread.h>
 void *julia_routine(void *param)
 {
 

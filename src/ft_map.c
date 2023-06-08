@@ -1,21 +1,5 @@
 #include "fractol.h"
 
-static double double_min(double a, double b)
-{
-	if (a > b)
-		return b;
-	else
-		return a;
-}
-
-static double double_max(double a, double b)
-{
-	if (a > b)
-		return a;
-	else
-		return b;
-}
-
 double ft_abs(double a)
 {
 	if (a >= 0)

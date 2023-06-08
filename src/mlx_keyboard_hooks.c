@@ -41,9 +41,7 @@ void keyboard_navigation(void *param)
 void keyboard_itterations(void *param)
 {
 	t_data	*data;
-	double	EPS;
 
-	EPS = 50;
 	data = param;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_I) && data->max_iter < 500.0)
 		data->max_iter += 10;
@@ -69,7 +67,6 @@ void keyboard_exit(void *param)
 void keyboard_hooks(void *param)
 {
 	t_data	*data = param;
-	mlx_t	*mlx = data->mlx;
 
 	keyboard_exit((void*) data);
 	keyboard_zoom((void*) data);

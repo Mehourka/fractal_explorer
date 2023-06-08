@@ -51,7 +51,8 @@ SRCS	=	main.c				\
 			mlx_vectors.c		\
 			mlx_init.c			\
 			mlx_julia.c			\
-			mlx_utils.c				\
+			mlx_utils.c			\
+			mlx_render.c			\
 
 BONUS	= 	bonus_main.c				\
 

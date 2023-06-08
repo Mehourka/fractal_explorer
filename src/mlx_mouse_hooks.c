@@ -2,10 +2,12 @@
 
 void capt_click_position(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
 {
-	t_data *data = (t_data *) param;
+	t_data *data;
 	int32_t x;
 	int32_t y;
 
+	(void) mods;
+	data = (t_data *) param;
 	if(button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		mlx_get_mouse_pos(data->mlx, &x, &y);
@@ -23,6 +25,7 @@ void scroll_zoom(double xdelta, double ydelta, void *param)
 
 	data = (t_data*) param;
 	EPS = 0.1;
+	(void) xdelta;
 	mlx_get_mouse_pos(data->mlx, pix_mouse_pos, pix_mouse_pos + 1);
 	cast_vector(mouse_pos, pix_mouse_pos);
 	map_vector(mouse_pos, data);
