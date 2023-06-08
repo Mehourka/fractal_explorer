@@ -59,7 +59,7 @@ double		ft_map(double val, double in_range[2], double out_range[2]);
 
 void		keyboard_hooks(void *param);
 void		scroll_zoom(double xdelta, double ydelta, void *param);
-void		mouse_navigation(void *param);
+void		mouse_hooks(void *param);
 void		resize_window(int32_t width, int32_t height, void *param);
 
 

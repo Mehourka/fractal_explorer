@@ -3,7 +3,7 @@
 void keyboard_zoom(void *param)
 {
 	t_data	*data;
-	double EPS;
+	double	EPS;
 
 	data = (t_data *) param;
 	EPS = 0.01;
@@ -21,9 +21,9 @@ void keyboard_zoom(void *param)
 
 void keyboard_navigation(void *param)
 {
-	t_data			*data;
-	double EPS;
-	double range;
+	t_data	*data;
+	double	EPS;
+	double	range;
 
 	data = (t_data *) param;
 	range = data->x_range[1] - data->x_range[0];
@@ -40,8 +40,8 @@ void keyboard_navigation(void *param)
 
 void keyboard_itterations(void *param)
 {
-	t_data *data;
-	double EPS;
+	t_data	*data;
+	double	EPS;
 
 	EPS = 50;
 	data = param;
@@ -68,10 +68,8 @@ void keyboard_exit(void *param)
 
 void keyboard_hooks(void *param)
 {
-	t_data			*data = param;
-	mlx_t			*mlx = data->mlx;
-	double EPS = 0.06;
-	double TRANS_EPS = 0.02;
+	t_data	*data = param;
+	mlx_t	*mlx = data->mlx;
 
 	keyboard_exit((void*) data);
 	keyboard_zoom((void*) data);
