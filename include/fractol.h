@@ -55,6 +55,7 @@ typedef struct data{
 
 void		ft_error(void);
 t_data		*init_data(void);
+void		free_data(void);
 double		ft_map(double val, double in_range[2], double out_range[2]);
 
 			// Hooks
