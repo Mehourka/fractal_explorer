@@ -25,6 +25,7 @@
 # define WIDTH 512
 # define HEIGHT 512
 # define MAX_ITER 50
+# define N_THREADS 6
 
 # define WHITE 0xFFFFFFFF
 # define BLACK 0x000000FF
@@ -48,6 +49,7 @@ typedef struct data{
 	double		offset[2];
 	double		pan_start[2];
 	double		t;
+	double		step_i;
 }	t_data;
 
 
@@ -55,7 +57,7 @@ int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 t_data		*init_data(void);
 double		ft_map(double val, double in_range[2], double out_range[2]);
 
-void		key_navigation(void *param);
+void		keyboard_hooks(void *param);
 void		scroll_zoom(double xdelta, double ydelta, void *param);
 void		mouse_navigation(void *param);
 void		resize_window(int32_t width, int32_t height, void *param);
@@ -68,7 +70,6 @@ void		mult_vector(double v[2], double c);
 void		cast_vector(double v[2], int u[2]);
 void		print_vector(double v[2]);
 
-void		iter_hook(void *param);
 void		mandelbrot(void *param);
 void		julia(void *param);
 void		julia_mouse_control(double xpos, double ypos, void* param);
@@ -78,4 +79,5 @@ void		julia_mouse_control(double xpos, double ypos, void* param);
 /* ------------------------------------------------ */
 void		square_hook(void *param);
 void		circle_hook(void *param);
+void		julia_pthread(void *param);
 #endif

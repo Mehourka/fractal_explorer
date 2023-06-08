@@ -38,7 +38,7 @@ int32_t	main(void)
 
 
 	/* NAVIGATION */
-	mlx_loop_hook(data->mlx, &key_navigation, data);
+	mlx_loop_hook(data->mlx, &keyboard_hooks, data);
 	mlx_scroll_hook(mlx, &scroll_zoom, data);
 	mlx_mouse_hook(data->mlx, &capt_mouse_start, data);
 	mlx_loop_hook(data->mlx, &mouse_navigation, data);
@@ -46,13 +46,12 @@ int32_t	main(void)
 	mlx_resize_hook(mlx, &resize_window, data);
 
 	/* Fractal */
-	// mlx_loop_hook(data->mlx, &iter_hook, data);
 	// mlx_loop_hook(data->mlx, &mandelbrot, data);
-	// mlx_loop_hook(data->mlx, &julia, data);
+	mlx_loop_hook(data->mlx, &julia_pthread, data);
 	// mlx_cursor_hook(data->mlx, &julia_mouse_control, data);
 
 	/* Test Square */
-	mlx_loop_hook(data->mlx, &square_hook, data);
+	// mlx_loop_hook(data->mlx, &square_hook, data);
 	// mlx_loop_hook(data->mlx, &circle_hook, data);
 
 

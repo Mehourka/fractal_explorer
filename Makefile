@@ -47,7 +47,8 @@ BDIR	=	bonus/
 SRCS	=	main.c				\
 			ft_map.c			\
 			mlx_mandelbrot.c	\
-			mlx_nav_hooks.c		\
+			mlx_keyboard_hooks.c\
+			mlx_mouse_hooks.c	\
 			mlx_vectors.c		\
 			mlx_init.c			\
 			mlx_julia.c			\
@@ -102,6 +103,8 @@ $(ODIR)%.o : $(SDIR)%.c
 $(ODIR)%.o : $(BDIR)%.c
 	@mkdir -p $(ODIR);
 	@$(CC) -c $(CFLAGS) $< -o $@
+
+
 
 # Remove objects
 clean :
