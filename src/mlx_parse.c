@@ -84,9 +84,6 @@ int parse_arguments(int argc, char *argv[], t_data *data)
 		}
 		data->julia_c[0] = ft_atod(argv[2]);
 		data->julia_c[1] = ft_atod(argv[3]);
-
-		printf("Arguments (%f, %f)\n", data->julia_c[0], data->julia_c[1]);
-
 	}
 
 

@@ -95,4 +95,6 @@ void		print_vector(double v[2]);
 void		square_hook(void *param);
 void		circle_hook(void *param);
 void		julia_pthread(void *param);
+int map_color(int32_t color1, int32_t color2, double s);
+
 #endif

@@ -15,7 +15,7 @@ static double compute_burnin_ship_iterations(double z0[2], t_data *data)
 	{
 		tmp = zn[0];
 		zn[0] = zn[0] * zn[0] - zn[1] * zn[1] + z0[0];
-		zn[1] = 2.0 * fabs(zn[1] * tmp)  + z0[1];
+		zn[1] = -2.0 * fabs(zn[1] * tmp)  + z0[1];
 		i++;
 	}
 	mod = sqrt(mod2(zn));

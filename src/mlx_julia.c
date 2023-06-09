@@ -62,16 +62,14 @@ void julia(void *param)
 void julia_mouse_control(double xpos, double ypos, void* param)
 {
 	t_data *data;
+	double pos2[2] = {xpos, ypos};
 
 	data = param;
 	// data->julia_c[0] = sin(ft_map(xpos, data->x_pix_range, (double[]){-M_PI / 2, M_PI / 2}));
 	// data->julia_c[1] = sin(ft_map(ypos, data->y_pix_range, (double[]){-M_PI / 2, M_PI / 2}));
-
-	double pos2[2] = {xpos, ypos};
 	map_vector(pos2, init_data());
 	data->julia_c[0] = pos2[0];
 	data->julia_c[1] = pos2[1];
-	printf("(%f, %f)\n",pos2[0], pos2[1]);
 }
 
 

@@ -19,11 +19,12 @@ void identity(void *param)
 			pos[1] = (double) j;
 			map_vector(pos, data);
 			sub_vector(pos, off);
-			if (pos[0] == 0 || pos[1] == 0)
+			if ((pos[0] <= 0.001 && pos[0] >= -0.001)  || pos[1] == 0.0)
 				mlx_put_pixel(image, i, j, WHITE);
 		}
 	}
 }
+
 
 int32_t	main(int argc, char *argv[])
 {
@@ -37,21 +38,12 @@ int32_t	main(int argc, char *argv[])
 	(void) argv;
 
 	parse_arguments(argc, argv, data);
-	printf("atod result : %f\n", ft_atod("0.0"));
-	printf("atod result : %f\n", ft_atod("-1.6"));
-	printf("atod result : %f\n", ft_atod("2.6"));
-	printf("atod result : %f\n", ft_atod("-125798"));
-	printf("atod result : %f\n", ft_atod("3324"));
 
+	mlx_loop_hook(data->mlx, &keyboard_hooks, data);
+	mlx_loop_hook(data->mlx, &mouse_hooks, data);
 
-
-	// mlx_loop_hook(data->mlx, &keyboard_hooks, data);
-	// mlx_loop_hook(data->mlx, &mouse_hooks, data);
-
-
-	// mlx_loop_hook(data->mlx, data->frac_function, data);
-	// mlx_cursor_hook(data->mlx, &julia_mouse_control, data);
-	mlx_loop_hook(data->mlx, &identity, data);
+	mlx_loop_hook(data->mlx, data->frac_function, data);
+	mlx_cursor_hook(data->mlx, &julia_mouse_control, data);
 
 	mlx_loop(data->mlx);
 	free_data();
