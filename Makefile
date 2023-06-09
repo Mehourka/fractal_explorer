@@ -30,7 +30,7 @@ NAME	=	fractol
 LIBDIR	=	lib/
 INCDIR	=	include/
 SRCDIR	=	src/
-BONDIR	=	bonus/
+BONDIR	=	bonus_src/
 
 LIBFT	=	$(LIBDIR)/libft
 LIBMLX	=	$(LIBDIR)/MLX42
@@ -56,11 +56,22 @@ SRCS	=	main.c				\
 			mlx_vectors.c		\
 			mlx_init.c			\
 			mlx_utils.c			\
-			mlx_render.c			\
+			mlx_render.c		\
 			mlx_parse.c			\
 			tests.c				\
 
-BONUS	= 	bonus_main.c				\
+BONUS	=	bonus_main.c					\
+			bonus_ft_map.c					\
+			bonus_mlx_burning_ship.c		\
+			bonus_mlx_init.c				\
+			bonus_mlx_julia.c				\
+			bonus_mlx_keyboard_hooks.c		\
+			bonus_mlx_mandelbrot.c			\
+			bonus_mlx_mouse_hooks.c			\
+			bonus_mlx_parse.c				\
+			bonus_mlx_render.c				\
+			bonus_mlx_utils.c				\
+			bonus_mlx_vectors.c				\
 
 
 # Objects
@@ -98,6 +109,11 @@ $(OBJDIR)%.o : $(SRCDIR)%.c
 	@mkdir -p $(OBJDIR);
 	@$(CC) -c $(CFLAGS) -MMD -MP $< -o $@ $(INCLUDES)
 
+bonus : libft libmlx $(BONUS)
+	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
+	$(CC) $(CFLAGS) $(BONUS) $(LIBS) -o $@ -I/bonus_src/ $(INCLUDES)
+	./bonus 1
+
 # Compile Bonus
 $(OBJDIR)%.o : $(BONDIR)%.c
 	@mkdir -p $(OBJDIR);
@@ -127,4 +143,4 @@ leak :
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(ARGS)
 
 .PHONY:
-	clean fclean re test all directories visualizer leak libft libmlx
+	clean fclean re test all directories visualizer leak libft libmlx bonus

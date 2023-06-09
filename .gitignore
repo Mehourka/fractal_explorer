@@ -1,6 +1,7 @@
 obj/
 .vscode/
 test/
+bonus
 
 fractol
 src/tests.c
