@@ -14,7 +14,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-ARGS = 2 0 0.8
+ARGS = 2 -0.4 0.6
 
 # Colors
 GREEN	=	\033[0;32m
@@ -57,6 +57,7 @@ SRCS	=	main.c				\
 			mlx_utils.c			\
 			mlx_render.c			\
 			mlx_parse.c			\
+			tests.c				\
 
 BONUS	= 	bonus_main.c				\
 

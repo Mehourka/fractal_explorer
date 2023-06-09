@@ -22,31 +22,31 @@ int is_valid_float(const char *str)
 
 double ft_atod(const char *num)
 {
-	int dot_flag;
-	int i;
+	double signe;
 	double result;
 	double frac;
-	int signe;
 
-	dot_flag = 0;
-	i = -1;
-	result = 0.0;
-	frac = 1.0;
-	while(num[++i])
+	signe = 1.0;
+	result = 0;
+	frac = 0.0;
+	if (*num == '-')
 	{
-		if (i == 0 && num[i] == '-')
-			signe = -(++i);
-		if(num[i] == '.')
-			dot_flag = i++;
-		if (dot_flag == 0)
-			result = result * 10.0 + (num[i] - '0');
-		else
-		{
-			frac /= 10.0;
-			result = result + (num[i] - '0') * frac;
-		}
+		signe *= -1.0;
+		num++;
 	}
-	return signe * result;
+	while(*num)
+	{
+		if (*num == '.')
+		{
+			frac = (num++ != 0);
+		}
+		result = result * 10 + (*num - '0');
+		frac *= 0.1;
+		num++;
+	}
+	if (frac == 0.0)
+		frac = 1.0;
+	return (signe * frac * result);
 }
 
 void print_usage(void)
@@ -84,6 +84,8 @@ int parse_arguments(int argc, char *argv[], t_data *data)
 		}
 		data->julia_c[0] = ft_atod(argv[2]);
 		data->julia_c[1] = ft_atod(argv[3]);
+
+		printf("Arguments (%f, %f)\n", data->julia_c[0], data->julia_c[1]);
 
 	}
 
