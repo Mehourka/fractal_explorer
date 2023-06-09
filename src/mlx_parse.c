@@ -22,31 +22,29 @@ int is_valid_float(const char *str)
 
 double ft_atod(const char *num)
 {
-	double signe;
-	double result;
-	double frac;
+	double	whole;
+	double	frac;
+	double	dec;
 
-	signe = 1.0;
-	result = 0;
+	whole = ft_atoi(num);
 	frac = 0.0;
-	if (*num == '-')
-	{
-		signe *= -1.0;
-		num++;
-	}
+	dec = 0.0;
 	while(*num)
 	{
 		if (*num == '.')
 		{
-			frac = (num++ != 0);
+			frac = 1.0;
+			num++;
 		}
-		result = result * 10 + (*num - '0');
 		frac *= 0.1;
+		dec += (*num - '0') * frac;
 		num++;
 	}
 	if (frac == 0.0)
 		frac = 1.0;
-	return (signe * frac * result);
+	if(whole < 0)
+		dec *= -1;
+	return (whole + dec);
 }
 
 void print_usage(void)
