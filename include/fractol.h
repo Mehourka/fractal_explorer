@@ -22,6 +22,10 @@
 # include <string.h>
 # include <math.h>
 
+# define MANDELBROT	1
+# define JULIA		2
+# define BURN_SHP	3
+
 # define WIDTH 512//512512
 # define HEIGHT 512//512512
 # define MAX_ITER 50
@@ -32,6 +36,9 @@
 # define COLOR 0x00FFFFFF
 # define M_PI 3.14159265358979323846  /* pi */
 
+#define TRUE 1
+#define FALSE 0
+
 # define FRAC_JULIA 1
 # define FRAC_MANDL 2
 #define BPP sizeof(int32_t)
@@ -39,8 +46,9 @@
 typedef struct data{
 	mlx_t		*mlx;
 	mlx_image_t	*image;
-	uint32_t		max_iter;
-	uint32_t		color;
+	void		*frac_function;
+	uint32_t	max_iter;
+	uint32_t	color;
 	double		x_range[2];
 	double		y_range[2];
 	double		x_pix_range[2];
@@ -61,6 +69,7 @@ double		ft_map(double val, double in_range[2], double out_range[2]);
 			// Hooks
 void		keyboard_hooks(void *param);
 void		mouse_hooks(void *param);
+void		julia_mouse_control(double xpos, double ypos, void* param);
 
 void		map_vector(double v[2], t_data *data);
 void		add_vector(double v[2], double u[2]);
@@ -73,7 +82,10 @@ void		render_pixel(mlx_image_t *img, int i, int j, double num_iter);
 
 void		mandelbrot(void *param);
 void		julia(void *param);
-void		julia_mouse_control(double xpos, double ypos, void* param);
+void		burning_ship(void *param);
+
+double		ft_atod(const char *str);
+int parse_arguments(int argc, char *argv[], t_data *data);
 
 /* ------------------------------------------------ */
 /*						TEST						*/

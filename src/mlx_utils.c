@@ -12,6 +12,7 @@ void free_data(void)
 void ft_error(void)
 {
 	ft_putstr_fd((char*)mlx_strerror(mlx_errno), STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	free_data();
 	exit(EXIT_FAILURE);
 }

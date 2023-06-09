@@ -14,6 +14,8 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
+ARGS = 2 0 0.8
+
 # Colors
 GREEN	=	\033[0;32m
 RED		=	\033[0;31m
@@ -46,13 +48,15 @@ RM		=	rm
 SRCS	=	main.c				\
 			ft_map.c			\
 			mlx_mandelbrot.c	\
+			mlx_julia.c			\
+			mlx_burning_ship.c	\
 			mlx_keyboard_hooks.c\
 			mlx_mouse_hooks.c	\
 			mlx_vectors.c		\
 			mlx_init.c			\
-			mlx_julia.c			\
 			mlx_utils.c			\
 			mlx_render.c			\
+			mlx_parse.c			\
 
 BONUS	= 	bonus_main.c				\
 
