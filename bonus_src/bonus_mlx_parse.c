@@ -92,7 +92,7 @@ int parse_arguments(int argc, char *argv[], t_data *data)
 	else if (frac_choice == JULIA)
 		data->frac_function = &julia_pthread;
 	else if (frac_choice == BURN_SHP)
-		data->frac_function = &burning_ship;
+		data->frac_function = &burning_ship_pthread;
 
 
 	(void) argv;

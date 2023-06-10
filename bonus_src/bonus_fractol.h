@@ -30,10 +30,10 @@
 # define WIDTH 512//512512
 # define HEIGHT 512//512512
 # define MAX_ITER 50
-# define N_THREADS 6
+# define N_THREADS 100
 
 # define WHITE 0xFFFFFFFF
-# define BLACK 0x242424FF
+# define BLACK 0x161616FF
 # define COLOR 0x00FFFFFF
 # define M_PI 3.14159265358979323846  /* pi */
 
@@ -84,7 +84,7 @@ void		render_pixel(mlx_image_t *img, int i, int j, double num_iter);
 
 void		mandelbrot_pthread(void *param);
 void		julia_pthread(void *param);
-void		burning_ship(void *param);
+void		burning_ship_pthread(void *param);
 
 double		ft_atod(const char *str);
 int			parse_arguments(int argc, char *argv[], t_data *data);

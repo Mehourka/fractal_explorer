@@ -47,13 +47,13 @@ void render_pixel(mlx_image_t *img, int i, int j, double num_iter)
 	int32_t	color;
 
 	double hue = ft_map((double) num_iter, (double[]){0, max_iter}, (double[]){-M_PI / 2, M_PI / 2});
-	static double shift = 12;
+	static double shift = -0.5;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_C))
 	{
 		shift += pow(10, -6.5);
-
+		if(shift > M_PI)
+			shift = -M_PI;
 	}
-
 	color = get_rgba(\
 		0.5 * (sin(hue + shift) + 1) * 255,\
 		0.5 * (sin(hue + shift + M_PI / 3) + 1) * 255,\

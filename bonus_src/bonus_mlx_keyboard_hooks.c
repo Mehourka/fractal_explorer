@@ -6,7 +6,7 @@ void keyboard_zoom(void *param)
 	double	EPS;
 
 	data = (t_data *) param;
-	EPS = 0.1;
+	EPS = 0.05;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_PAGE_UP))
 	{
 		mult_vector(data->x_range, 1 - EPS);

@@ -25,7 +25,7 @@ static double compute_burnin_ship_iterations(double z0[2], t_data *data)
 	return (smooth_iter);
 }
 
-void burning_ship(void *param)
+void *burning_ship_routine(void *param)
 {
 	t_data			*data = param;
 	double			pos[2];
@@ -33,8 +33,17 @@ void burning_ship(void *param)
 	uint32_t	i;
 	uint32_t	j;
 
-	i = 0;
-	while (i < data->image->width)
+
+	uint32_t thread_num = ++data->step_i;
+	uint32_t q = data->image->width / N_THREADS;
+	uint32_t r = data->image->width % N_THREADS;
+	uint32_t w = q + (thread_num < r);
+	uint32_t start = thread_num * q + fmin(thread_num, r);
+	uint32_t end = start + w;
+
+
+	i = start;
+	while (i < end)
 	{
 		j = 0;
 		while(j < data->image->height)
@@ -43,10 +52,28 @@ void burning_ship(void *param)
 			pos[1] = (double) j;
 			map_vector(pos, data);
 			sub_vector(pos, data->offset);
-			iterations = compute_burnin_ship_iterations(pos, data);
+			iterations = compute_burnin_ship_iterations(pos,data);
 			render_pixel(data->image, i, j, iterations);
 			j++;
 		}
 		i++;
 	}
+	return (NULL);
+}
+
+void burning_ship_pthread(void *param)
+{
+	pthread_t th[N_THREADS];
+	t_data *data = (t_data *) param;
+
+	for (int i = 0; i < N_THREADS; i++)
+	{
+		pthread_create(&th[i], NULL, &burning_ship_routine, (void *) data);
+	}
+
+	for (int i = 0; i < N_THREADS; i++)
+	{
+		pthread_join(th[i], NULL);
+	}
+	data->step_i = -1;
 }

@@ -15,7 +15,7 @@
 #------------------------------------------------------------------------------#
 
 # ARGS = 2 -0.4 0.6
-ARGS = 1
+ARGS = 3
 
 # Colors
 GREEN	=	\033[0;32m
@@ -112,7 +112,7 @@ $(OBJDIR)%.o : $(SRCDIR)%.c
 bonus : libft libmlx $(BONUS)
 	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
 	$(CC) $(CFLAGS) $(BONUS) $(LIBS) -o $@ -I/bonus_src/ $(INCLUDES)
-	./bonus 1
+	./bonus $(ARGS)
 
 # Compile Bonus
 $(OBJDIR)%.o : $(BONDIR)%.c

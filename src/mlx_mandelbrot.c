@@ -27,9 +27,9 @@ static double compute_smooth_iterations(double z0[2], t_data *data)
 
 void mandelbrot(void *param)
 {
-	t_data			*data = param;
-	double			pos[2];
-	double iterations;
+	t_data		*data = param;
+	double		pos[2];
+	double		iterations;
 	uint32_t	i;
 	uint32_t	j;
 
