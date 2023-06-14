@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 12:50:46 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/14 11:51:32 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/14 13:49:56 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,6 @@ GREEN	=	\033[0;32m
 RED		=	\033[0;31m
 BLUE	=	\033[0;34m
 NC		=	\033[0m
-
-
-# Tester : git@github.com:LeoFu9487/push_swap_tester.git
 
 NAME	=	fractol
 LIBDIR	=	lib/

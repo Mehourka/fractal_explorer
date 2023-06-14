@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:10:23 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/14 13:10:35 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/14 13:29:31 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_data	*init_data(void)
 		data->offset[1] = 0;
 		data->pan_start[0] = 0;
 		data->pan_start[1] = 0;
-		data->color = COLOR;
 		data->julia_c[0] = 0.2345;
 		data->julia_c[0] = 0.3254;
 		data->t = 0;

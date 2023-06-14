@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:21:34 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/14 13:20:26 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/14 13:56:04 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 # include "libft.h"
 # include <math.h>
 # include <pthread.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
 
 # define MANDELBROT 1
 # define JULIA 2
@@ -58,30 +53,32 @@ typedef struct data
 	double		step_i;
 }				t_data;
 
-void			ft_error(void);
+// Utils
 t_data			*init_data(void);
 void			free_data(void);
+void			ft_error(void);
 double			ft_map(double val, double in_range[2], double out_range[2]);
+double			ft_atod(const char *str);
+void			parse_arguments(int argc, char *argv[], t_data *data);
 
 // Hooks
 void			keyboard_hooks(void *param);
 void			mouse_hooks(void *param);
 void			julia_mouse_control(double xpos, double ypos, void *param);
 
+// Vectors
 void			map_vector(double v[2], t_data *data);
 void			add_vector(double v[2], double u[2]);
 void			sub_vector(double v[2], double u[2]);
 void			mult_vector(double v[2], double c);
 void			cast_vector(double v[2], int u[2]);
 double			mod2(double v[2]);
-int				get_rgba(int r, int g, int b, int a);
-void			render_pixel(mlx_image_t *img, int i, int j, double num_iter);
 
 void			mandelbrot_pthread(void *param);
 void			julia_pthread(void *param);
 void			burning_ship_pthread(void *param);
+void			set_interval(uint32_t limits[2], t_data *data);
 
-double			ft_atod(const char *str);
-void			parse_arguments(int argc, char *argv[], t_data *data);
+void			render_pixel(mlx_image_t *img, int i, int j, double num_iter);
 
 #endif

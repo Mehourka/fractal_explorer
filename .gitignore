@@ -6,3 +6,4 @@ bonus
 fractol
 src/tests.c
 src/random_square.c
+*.dSYM/
