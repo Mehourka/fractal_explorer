@@ -51,25 +51,29 @@ void keyboard_itterations(void *param)
 		data->color *= 1.03;
 }
 
-void keyboard_exit(void *param)
+void keyboard_julia_flag(mlx_key_data_t keydata, void *param)
 {
 	t_data	*data;
-	mlx_t	*mlx;
-
 	data = (t_data*) param;
-	mlx = data->mlx;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_P))
-		mlx_delete_image(mlx, data->image);
+	int julia_control_flag;
+
+	julia_control_flag = 0;
+	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
+		julia_control_flag = !julia_control_flag;
+
+	if(julia_control_flag)
+		mlx_cursor_hook(data->mlx, &julia_mouse_control, data);
+
 }
 
 void keyboard_hooks(void *param)
 {
 	t_data	*data = param;
 
-	keyboard_exit((void*) data);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(data->mlx);
 	keyboard_zoom((void*) data);
 	keyboard_navigation((void*) data);
 	keyboard_itterations((void*) data);
+	mlx_key_hook(data->mlx, &keyboard_julia_flag, data);
 }

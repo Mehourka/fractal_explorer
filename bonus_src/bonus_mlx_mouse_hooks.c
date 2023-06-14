@@ -81,8 +81,9 @@ void mouse_navigation(void *param)
 void mouse_hooks(void *param)
 {
 	t_data	*data = param;
-
+	
 	mouse_navigation((t_data*) data);
 	mlx_resize_hook(data->mlx, &resize_window, data);
 	mlx_scroll_hook(data->mlx, &scroll_zoom, data);
+	mlx_cursor_hook(data->mlx, &julia_mouse_control, data);
 }

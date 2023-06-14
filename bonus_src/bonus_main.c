@@ -17,7 +17,6 @@ int32_t	main(int argc, char *argv[])
 	mlx_loop_hook(data->mlx, &mouse_hooks, data);
 
 	mlx_loop_hook(data->mlx, data->frac_function, data);
-	mlx_cursor_hook(data->mlx, &julia_mouse_control, data);
 
 	mlx_loop(data->mlx);
 	free_data();
