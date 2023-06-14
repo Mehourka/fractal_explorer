@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bonus_mlx_julia.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/14 13:09:57 by kmehour           #+#    #+#             */
+/*   Updated: 2023/06/14 13:09:58 by kmehour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "bonus_fractol.h"
 
 void julia_time_shift(t_data *data)
@@ -33,16 +45,7 @@ static double compute_julia_iterations(double z0[2],double *julia_c, t_data *dat
 	return (smooth_iter);
 }
 
-void julia_mouse_control(double xpos, double ypos, void* param)
-{
-	t_data *data;
-	double pos2[2] = {xpos, ypos};
 
-	data = param;
-	map_vector(pos2, init_data());
-	data->julia_c[0] = pos2[0];
-	data->julia_c[1] = pos2[1];
-}
 
 
 # include <pthread.h>
@@ -98,4 +101,17 @@ void julia_pthread(void *param)
 	}
 	data->step_i = -1;
 
+}
+
+void	julia_mouse_control(double xpos, double ypos, void *param)
+{
+	t_data	*data;
+	double	pos2[2];
+
+	pos2[0] = xpos;
+	pos2[1] = ypos;
+	data = param;
+	map_vector(pos2, init_data());
+	data->julia_c[0] = pos2[0];
+	data->julia_c[1] = pos2[1];
 }

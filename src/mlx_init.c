@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_init.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/14 13:10:23 by kmehour           #+#    #+#             */
+/*   Updated: 2023/06/14 13:10:35 by kmehour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
-void init_mlx_ranges(t_data *data)
+void	init_mlx_ranges(t_data *data)
 {
 	data->x_range[0] = -2;
 	data->x_range[1] = 2;
@@ -12,10 +24,10 @@ void init_mlx_ranges(t_data *data)
 	data->y_pix_range[1] = HEIGHT;
 }
 
-void init_mlx_image(t_data *data)
+void	init_mlx_image(t_data *data)
 {
 	data->image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	if(!data->image)
+	if (!data->image)
 		ft_error();
 	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
 	{
@@ -24,9 +36,9 @@ void init_mlx_image(t_data *data)
 	}
 }
 
-t_data *init_data(void)
+t_data	*init_data(void)
 {
-	static t_data *data;
+	static t_data	*data;
 
 	if (!data)
 	{
@@ -34,7 +46,7 @@ t_data *init_data(void)
 		if (!data)
 			exit(EXIT_FAILURE);
 		data->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
-		if(!data->mlx)
+		if (!data->mlx)
 			ft_error();
 		data->offset[0] = 0;
 		data->offset[1] = 0;
@@ -43,8 +55,8 @@ t_data *init_data(void)
 		data->color = COLOR;
 		data->julia_c[0] = 0.2345;
 		data->julia_c[0] = 0.3254;
-		data->t			 = 0;
-		data->step_i	 = -1;
+		data->t = 0;
+		data->step_i = -1;
 		data->max_iter = MAX_ITER;
 		init_mlx_image(data);
 		init_mlx_ranges(data);
