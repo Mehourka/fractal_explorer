@@ -59,7 +59,7 @@ void julia(void *param)
 	}
 }
 
-void julia_mouse_gcontrol(double xpos, double ypos, void *param)
+void julia_mouse_control(double xpos, double ypos, void *param)
 {
 	t_data *data;
 	double pos2[2] = {xpos, ypos};
@@ -76,56 +76,4 @@ void julia_mouse_gcontrol(double xpos, double ypos, void *param)
 	map_vector(pos2, init_data());
 	data->julia_c[0] = pos2[0];
 	data->julia_c[1] = pos2[1];
-}
-
-#include <pthread.h>
-void *julia_routine(void *param)
-{
-	t_data *data = param;
-	double pos[2];
-	double iterations;
-	uint32_t i;
-	uint32_t j;
-
-	uint32_t thread_num = ++data->step_i;
-	uint32_t q = data->image->width / N_THREADS;
-	uint32_t r = data->image->width % N_THREADS;
-	uint32_t w = q + (thread_num < r);
-	uint32_t start = thread_num * q + fmin(thread_num, r);
-	uint32_t end = start + w;
-
-	i = start;
-	while (i < end)
-	{
-		j = 0;
-		while (j < data->image->height)
-		{
-			pos[0] = (double)i;
-			pos[1] = (double)j;
-			map_vector(pos, data);
-			sub_vector(pos, data->offset);
-			iterations = compute_julia_iterations(pos, data->julia_c, data);
-			render_pixel(data->image, i, j, iterations);
-			j++;
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-void julia_pthread(void *param)
-{
-	pthread_t th[N_THREADS];
-	t_data *data = (t_data *)param;
-
-	for (int i = 0; i < N_THREADS; i++)
-	{
-		pthread_create(&th[i], NULL, &julia_routine, (void *)data);
-	}
-
-	for (int i = 0; i < N_THREADS; i++)
-	{
-		pthread_join(th[i], NULL);
-	}
-	data->step_i = -1;
 }

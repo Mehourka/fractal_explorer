@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 12:50:46 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/05 11:22:17 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/14 11:51:32 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,7 +130,7 @@ clean :
 
 # Remove all
 fclean : clean
-	@$(RM) -f $(NAME) $(BONUS)
+	@$(RM) -f $(NAME) bonus
 	@$(RM) -rf $(NAME).dSYM
 
 	@$(MAKE) fclean -C $(LIBFT) -s

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   bonus_fractol.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:21:34 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/05 13:06:08 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/14 12:07:13 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@
 # define WHITE 0xFFFFFFFF
 # define BLACK 0x161616FF
 # define COLOR 0x00FFFFFF
-# define M_PI 3.14159265358979323846  /* pi */
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846  /* pi */
+# endif
 
 #define TRUE 1
 #define FALSE 0
