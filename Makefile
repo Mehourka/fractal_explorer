@@ -56,7 +56,6 @@ SRCS	=	main.c				\
 			mlx_utils.c			\
 			mlx_render.c		\
 			mlx_parse.c			\
-			tests.c				\
 
 BONUS	=	bonus_main.c					\
 			bonus_ft_map.c					\
@@ -94,6 +93,23 @@ $(NAME) : $(OBJS)
 	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME) -I. $(INCLUDES)
 
+# Install MacOS dependencies
+deps:
+	@if [ ! -f $(BREW) ]; then \
+		echo "Installing Homebrew"; \
+		curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | bash; \
+	else \
+		echo "Homebrew installed"; \
+		brew update; \
+	fi
+	@if ! brew list | grep -q "glfw"; then \
+		echo glfw not installed; \
+		brew install glfw; \
+	fi
+	@if ! brew list | grep -q "cmake"; then \
+		echo cmake not installed; \
+	fi
+
 # Compile libft
 libft:
 	@ $(MAKE) -C $(LIBFT) -s
@@ -101,6 +117,7 @@ libft:
 #Compiling libmlx
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4 -s
+
 
 # Compile objects
 $(OBJDIR)%.o : $(SRCDIR)%.c
