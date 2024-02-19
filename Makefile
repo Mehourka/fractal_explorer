@@ -112,12 +112,13 @@ deps:
 
 # Compile libft
 libft:
+	@ git submodule update --init --recursive
 	@ $(MAKE) -C $(LIBFT) -s
 
 #Compiling libmlx
 libmlx:
+	@ git submodule update --init --recursive
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4 -s
-
 
 # Compile objects
 $(OBJDIR)%.o : $(SRCDIR)%.c
