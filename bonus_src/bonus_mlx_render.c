@@ -54,12 +54,9 @@ void	render_pixel(mlx_image_t *img, int i, int j, double num_iter)
 	data = init_data();
 	max_iter = data->max_iter;
 	d = ft_map((double) num_iter, (double []){0, max_iter}, (double []){0, 1});
-	if (mlx_is_key_down(data->mlx, MLX_KEY_C))
-	{
-		shift += pow(10, -7);
-		if (shift > 1)
-			shift = 0;
-	}
+	shift += pow(10, -8.2);
+	if (shift > 1)
+		shift = 0;
 	d = pow(d, 0.4);
 	color = color_palette(d + shift);
 	if (num_iter == max_iter)
